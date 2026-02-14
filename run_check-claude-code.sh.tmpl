@@ -1,0 +1,17 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+
+if [ -f "${HOME}/.config/chezmoi/ignore-claude-code-check" ]; then
+    exit 0
+fi
+
+if ! command -v claude >/dev/null 2>&1; then
+    echo "WARNING: Claude Code is not installed."
+    echo ""
+    echo "Install it with:"
+    echo "  npm install -g @anthropic-ai/claude-code"
+    echo ""
+    echo "If you don't want Claude Code on this machine, suppress this warning:"
+    echo "  mkdir -p ~/.config/chezmoi && touch ~/.config/chezmoi/ignore-claude-code-check"
+fi
+{{ end -}}
