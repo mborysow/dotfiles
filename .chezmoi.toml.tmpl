@@ -1,0 +1,6 @@
+{{- $hasInternet := promptBoolOnce . "has_internet" "Does this machine have internet access" -}}
+{{- $isWork := promptBoolOnce . "is_work" "Is this a work machine" -}}
+
+[data]
+    has_internet = {{ $hasInternet }}
+    is_work = {{ $isWork }}
