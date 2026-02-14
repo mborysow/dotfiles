@@ -1,0 +1,21 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+if ! command -v zsh >/dev/null 2>&1; then
+    echo "WARNING: zsh is not installed."
+    echo ""
+    echo "Install it with one of the following:"
+    echo "  sudo apt install zsh    # Debian/Ubuntu"
+    echo "  sudo dnf install zsh    # Fedora/RHEL"
+    echo "  sudo pacman -S zsh      # Arch"
+    echo ""
+    echo "Then run 'chezmoi apply' again to set zsh as your default shell."
+    exit 0
+fi
+
+zsh_path="$(which zsh)"
+if [ "$SHELL" != "$zsh_path" ]; then
+    echo "Changing default shell to zsh ($zsh_path)..."
+    echo "You will be prompted for your password."
+    chsh -s "$zsh_path"
+fi
+{{ end -}}
