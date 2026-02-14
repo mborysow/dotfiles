@@ -1,0 +1,25 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+missing=()
+
+command -v rg >/dev/null 2>&1 || missing+=("ripgrep (rg)")
+command -v fzf >/dev/null 2>&1 || missing+=("fzf")
+command -v bat >/dev/null 2>&1 || command -v batcat >/dev/null 2>&1 || missing+=("bat")
+
+if [ ${#missing[@]} -gt 0 ]; then
+    echo "WARNING: The following tools are not installed:"
+    for tool in "${missing[@]}"; do
+        echo "  - $tool"
+    done
+    echo ""
+    echo "Install them with one of the following:"
+    echo "  sudo apt install ripgrep fzf bat       # Debian/Ubuntu"
+    echo "  sudo dnf install ripgrep fzf bat-cat   # Fedora/RHEL"
+    echo "  sudo pacman -S ripgrep fzf bat          # Arch"
+    echo ""
+    echo "Note: On Debian/Ubuntu, bat is installed as 'batcat'."
+    echo "      You may want to alias it: ln -s /usr/bin/batcat ~/.local/bin/bat"
+    echo ""
+    echo "Run 'chezmoi apply' again after installing."
+fi
+{{ end -}}
