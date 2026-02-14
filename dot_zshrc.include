@@ -1,0 +1,77 @@
+export PATH=$PATH:$HOME/bin:$HOME/.local/bin:/usr/local/bin:$HOME/.pixi/bin
+export PATH=$PATH:"/Applications/Emacs.app/Contents/MacOS"
+export PATH=$PATH:$HOME/.emacs.d/bin 
+export PATH=$PATH:"/Users/borysow/CodePortableUpdate/VSCODE/Contents/Resources/app/bin"
+export OPENAI_BASE_URL="http://localhost:8317/v1"
+export OPENAI_API_BASE="http://localhost:8317/v1"
+
+test -e /Users/borysow/.iterm2_shell_integration.zsh && source /Users/borysow/.iterm2_shell_integration.zsh || true
+
+# export BROWSER='firefox'
+export EDITOR='nvim'
+
+# fzf complains about any of the default -256color terms
+# export TERM=tmux-256color
+
+HOSTNAME=$(hostname)
+
+## this is to deal with work's annoying forced idle timeouts
+#function ssh() {
+#	/usr/bin/ssh -o ServerAliveCountMax=5 -o ServerAliveInterval=30 -o TCPKeepAlive=yes "$@" ;
+#}
+
+function ca() {
+    if [[ -z "$CONDA_RUN" ]]; then
+        export CONDA_RUN=1
+    fi
+
+    conda activate $1
+
+}
+
+# set -o vi
+# unset GREP_OPTIONS
+
+
+
+cdp () {
+    cd "$(python -c "import os.path as _, ${1}; \
+                    print(_.dirname(_.realpath(${1}.__file__[:-1])))"
+            )"
+}
+
+export HISTSIZE=999999999
+export SAVEHIST=$HISTSIZE
+
+### COMENTING OUT ALL THESE BINDKEYS FOR MAC UNTIL I KNOW IF NEEDED
+# don't know why this stopped working...
+# bindkey \\C-R history-incremental-search-backward
+
+# not sure what happened.....a
+# bindkey "\033[1~" beginning-of-line
+# bindkey "\033[4~" end-of-line
+
+# bindkey "^[OH" beginning-of-line
+# bindkey "^[OF" end-of-line
+
+# bindkey "\e[3~" delete-char
+bindkey ${FZF_WD_BINDKEY:-'^W'} wd_browse_widget
+
+# source /Users/borysow/repositories/external/shell_related/dircycle1/dircycle.zsh
+
+alias vim=nvim
+
+
+. "$HOME/.local/bin/env"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+    
+                                                                                     
+
+export FPATH="/Users/borysow/repositories/external/shell_related/eza/completions/zsh:$FPATH"
+
+autoload -Uz edit-command-line && zle -N edit-command-line && bindkey "${key_info[Control]}x${key_info[Control]}e" edit-command-line
+
+export CLAUDE_CODE_OAUTH_TOKEN=
