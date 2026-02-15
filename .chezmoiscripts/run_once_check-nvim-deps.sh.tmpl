@@ -1,0 +1,31 @@
+#!/bin/bash
+if [ -f "${HOME}/.config/chezmoi/ignore-nvim-check" ]; then exit 0; fi
+
+missing=()
+
+command -v nvim >/dev/null 2>&1 || missing+=("neovim (nvim)")
+command -v gcc >/dev/null 2>&1 || missing+=("gcc")
+command -v make >/dev/null 2>&1 || missing+=("make")
+command -v unzip >/dev/null 2>&1 || missing+=("unzip")
+{{- if eq .chezmoi.os "linux" }}
+command -v xclip >/dev/null 2>&1 || command -v xsel >/dev/null 2>&1 || missing+=("xclip or xsel (clipboard)")
+{{- end }}
+
+if [ ${#missing[@]} -gt 0 ]; then
+    echo "WARNING: The following neovim dependencies are not installed:"
+    for tool in "${missing[@]}"; do
+        echo "  - $tool"
+    done
+    echo ""
+{{- if eq .chezmoi.os "darwin" }}
+    echo "Install them with:"
+    echo "  brew install neovim gcc make unzip"
+{{- else }}
+    echo "Install them with one of the following:"
+    echo "  sudo apt install neovim gcc make unzip xclip   # Debian/Ubuntu"
+    echo "  sudo dnf install neovim gcc make unzip xclip   # Fedora/RHEL"
+    echo "  sudo pacman -S neovim gcc make unzip xclip     # Arch"
+{{- end }}
+    echo ""
+    echo "To suppress this check, create: ~/.config/chezmoi/ignore-nvim-check"
+fi

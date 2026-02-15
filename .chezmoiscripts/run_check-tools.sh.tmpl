@@ -5,6 +5,7 @@ command -v rg >/dev/null 2>&1 || missing+=("ripgrep (rg)")
 command -v fzf >/dev/null 2>&1 || missing+=("fzf")
 command -v bat >/dev/null 2>&1 || command -v batcat >/dev/null 2>&1 || missing+=("bat")
 command -v eza >/dev/null 2>&1 || missing+=("eza")
+command -v fd >/dev/null 2>&1 || command -v fdfind >/dev/null 2>&1 || missing+=("fd-find (fd)")
 command -v age >/dev/null 2>&1 || missing+=("age")
 
 if [ ${#missing[@]} -gt 0 ]; then
@@ -15,15 +16,17 @@ if [ ${#missing[@]} -gt 0 ]; then
     echo ""
 {{- if eq .chezmoi.os "darwin" }}
     echo "Install them with:"
-    echo "  sudo port install ripgrep fzf bat eza age"
+    echo "  sudo port install ripgrep fzf bat eza age fd"
 {{- else }}
     echo "Install them with one of the following:"
-    echo "  sudo apt install ripgrep fzf bat eza age       # Debian/Ubuntu"
-    echo "  sudo dnf install ripgrep fzf bat-cat eza age   # Fedora/RHEL"
-    echo "  sudo pacman -S ripgrep fzf bat eza age          # Arch"
+    echo "  sudo apt install ripgrep fzf bat eza age fd-find       # Debian/Ubuntu"
+    echo "  sudo dnf install ripgrep fzf bat-cat eza age fd-find   # Fedora/RHEL"
+    echo "  sudo pacman -S ripgrep fzf bat eza age fd               # Arch"
     echo ""
-    echo "Note: On Debian/Ubuntu, bat is installed as 'batcat'."
-    echo "      You may want to alias it: ln -s /usr/bin/batcat ~/.local/bin/bat"
+    echo "Note: On Debian/Ubuntu, bat is installed as 'batcat' and fd as 'fdfind'."
+    echo "      You may want to alias them:"
+    echo "        ln -s /usr/bin/batcat ~/.local/bin/bat"
+    echo "        ln -s /usr/bin/fdfind ~/.local/bin/fd"
 {{- end }}
     echo ""
     echo "Run 'chezmoi apply' again after installing."
