@@ -1,0 +1,48 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+
+if [ -f "${HOME}/.config/chezmoi/ignore-zellij-check" ]; then
+    exit 0
+fi
+
+if ! command -v zellij >/dev/null 2>&1; then
+    echo "WARNING: zellij is not installed."
+    echo ""
+    echo "Install it with one of:"
+    if command -v dnf >/dev/null 2>&1; then
+    echo "  dnf install zellij"
+    fi
+    if command -v apt >/dev/null 2>&1; then
+    echo "  apt install zellij"
+    fi
+    if command -v brew >/dev/null 2>&1; then
+    echo "  brew install zellij"
+    fi
+    echo "  cargo install --locked zellij"
+    echo ""
+    echo "If you don't want zellij on this machine, suppress this warning:"
+    echo "  mkdir -p ~/.config/chezmoi && touch ~/.config/chezmoi/ignore-zellij-check"
+fi
+{{- else -}}
+#!/bin/bash
+
+if [ -f "${HOME}/.config/chezmoi/ignore-zellij-check" ]; then
+    exit 0
+fi
+
+if ! command -v zellij >/dev/null 2>&1; then
+    echo "WARNING: zellij is not installed."
+    echo ""
+    echo "Install it with one of:"
+    if command -v brew >/dev/null 2>&1; then
+    echo "  brew install zellij"
+    fi
+    if command -v port >/dev/null 2>&1; then
+    echo "  port install zellij"
+    fi
+    echo "  cargo install --locked zellij"
+    echo ""
+    echo "If you don't want zellij on this machine, suppress this warning:"
+    echo "  mkdir -p ~/.config/chezmoi && touch ~/.config/chezmoi/ignore-zellij-check"
+fi
+{{ end -}}
