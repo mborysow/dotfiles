@@ -20,6 +20,9 @@ if ! command -v zellij >/dev/null 2>&1; then
     fi
     echo "  cargo install --locked zellij"
     echo ""
+    echo "On Ubuntu, you may need:"
+    echo "  apt install rustup make && rustup default stable"
+    echo ""
     echo "If you don't want zellij on this machine, suppress this warning:"
     echo "  mkdir -p ~/.config/chezmoi && touch ~/.config/chezmoi/ignore-zellij-check"
 fi
