@@ -1,4 +1,3 @@
-{{- if eq .chezmoi.os "linux" -}}
 #!/bin/bash
 missing=()
 
@@ -6,6 +5,7 @@ command -v rg >/dev/null 2>&1 || missing+=("ripgrep (rg)")
 command -v fzf >/dev/null 2>&1 || missing+=("fzf")
 command -v bat >/dev/null 2>&1 || command -v batcat >/dev/null 2>&1 || missing+=("bat")
 command -v eza >/dev/null 2>&1 || missing+=("eza")
+command -v age >/dev/null 2>&1 || missing+=("age")
 
 if [ ${#missing[@]} -gt 0 ]; then
     echo "WARNING: The following tools are not installed:"
@@ -13,14 +13,18 @@ if [ ${#missing[@]} -gt 0 ]; then
         echo "  - $tool"
     done
     echo ""
+{{- if eq .chezmoi.os "darwin" }}
+    echo "Install them with:"
+    echo "  sudo port install ripgrep fzf bat eza age"
+{{- else }}
     echo "Install them with one of the following:"
-    echo "  sudo apt install ripgrep fzf bat eza       # Debian/Ubuntu"
-    echo "  sudo dnf install ripgrep fzf bat-cat eza   # Fedora/RHEL"
-    echo "  sudo pacman -S ripgrep fzf bat eza          # Arch"
+    echo "  sudo apt install ripgrep fzf bat eza age       # Debian/Ubuntu"
+    echo "  sudo dnf install ripgrep fzf bat-cat eza age   # Fedora/RHEL"
+    echo "  sudo pacman -S ripgrep fzf bat eza age          # Arch"
     echo ""
     echo "Note: On Debian/Ubuntu, bat is installed as 'batcat'."
     echo "      You may want to alias it: ln -s /usr/bin/batcat ~/.local/bin/bat"
+{{- end }}
     echo ""
     echo "Run 'chezmoi apply' again after installing."
 fi
-{{ end -}}
