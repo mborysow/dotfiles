@@ -8,7 +8,7 @@ HOSTNAME=$(hostname)
 
 ## PATH MODIFICATIONS
 
-export PATH=$PATH:$HOME/bin:$HOME/.local/bin:/usr/local/bin:$HOME/.pixi/bin
+export PATH=$PATH:$HOME/bin:$HOME/.local/bin:/usr/local/bin:$HOME/.pixi/bin:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.emacs.d/bin 
 {{- if eq .chezmoi.os "darwin" }}
 export PATH=$PATH:"/Applications/Emacs.app/Contents/MacOS"
