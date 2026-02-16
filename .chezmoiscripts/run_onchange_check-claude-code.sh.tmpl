@@ -20,5 +20,6 @@ if ! command -v claude >/dev/null 2>&1; then
     echo ""
     echo "If you don't want Claude Code on this machine, suppress this warning:"
     echo "  mkdir -p ~/.config/chezmoi && touch ~/.config/chezmoi/ignore-claude-code-check"
+    exit 1
 fi
 {{ end -}}

@@ -30,4 +30,5 @@ if [ ${#missing[@]} -gt 0 ]; then
 {{- end }}
     echo ""
     echo "Run 'chezmoi apply' again after installing."
+    exit 1
 fi

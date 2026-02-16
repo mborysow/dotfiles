@@ -28,4 +28,5 @@ if [ ${#missing[@]} -gt 0 ]; then
 {{- end }}
     echo ""
     echo "To suppress this check, create: ~/.config/chezmoi/ignore-nvim-check"
+    exit 1
 fi

@@ -9,7 +9,7 @@ if ! command -v zsh >/dev/null 2>&1; then
     echo "  sudo pacman -S zsh      # Arch"
     echo ""
     echo "Then run 'chezmoi apply' again to set zsh as your default shell."
-    exit 0
+    exit 1
 fi
 
 zsh_path="$(which zsh)"

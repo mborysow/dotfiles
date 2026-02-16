@@ -25,6 +25,7 @@ if ! command -v zellij >/dev/null 2>&1; then
     echo ""
     echo "If you don't want zellij on this machine, suppress this warning:"
     echo "  mkdir -p ~/.config/chezmoi && touch ~/.config/chezmoi/ignore-zellij-check"
+    exit 1
 fi
 {{- else -}}
 #!/bin/bash
@@ -47,5 +48,6 @@ if ! command -v zellij >/dev/null 2>&1; then
     echo ""
     echo "If you don't want zellij on this machine, suppress this warning:"
     echo "  mkdir -p ~/.config/chezmoi && touch ~/.config/chezmoi/ignore-zellij-check"
+    exit 1
 fi
 {{ end -}}
