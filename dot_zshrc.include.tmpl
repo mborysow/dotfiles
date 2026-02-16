@@ -8,7 +8,7 @@ HOSTNAME=$(hostname)
 
 ## PATH MODIFICATIONS
 
-export PATH=$PATH:$HOME/bin:$HOME/.local/bin:/usr/local/bin:$HOME/.pixi/bin:$HOME/.cargo/bin
+export PATH=$HOME/.atuin/bin:$PATH:$HOME/bin:$HOME/.local/bin:/usr/local/bin:$HOME/.pixi/bin:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.emacs.d/bin 
 {{- if eq .chezmoi.os "darwin" }}
 export PATH=$PATH:"/Applications/Emacs.app/Contents/MacOS"
@@ -102,6 +102,11 @@ test -e $HOME/.iterm2_shell_integration.zsh && source $HOME/.iterm2_shell_integr
 
 # source $HOME/repositories/external/shell_related/dircycle1/dircycle.zsh
 
+
+# Atuin shell history
+if command -v atuin >/dev/null 2>&1; then
+    eval "$(atuin init zsh --disable-up-arrow)"
+fi
 
 ### LOCAL UNMANAGED SOURCE FILES
 # Source all files in .zshrc.include.d
