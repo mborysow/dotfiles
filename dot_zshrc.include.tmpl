@@ -34,8 +34,10 @@ export EDITOR='nvim'
 # fzf complains about any of the default -256color terms
 # export TERM=tmux-256color
 
+{{- if eq .chezmoi.os "darwin" }}
 export OPENAI_BASE_URL="http://localhost:8317/v1"
 export OPENAI_API_BASE="http://localhost:8317/v1"
+{{- end }}
 
 
 
@@ -82,11 +84,9 @@ cdp () {
 bindkey ${FZF_WD_BINDKEY:-'^W'} wd_browse_widget
 
 
-. "$HOME/.local/bin/env"
-
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
     
                                                                                      
 # export FPATH="$HOME/repositories/external/shell_related/eza/completions/zsh:$FPATH"
