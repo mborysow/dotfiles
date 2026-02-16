@@ -55,6 +55,6 @@ OS is available via `.chezmoi.os` (`"darwin"` or `"linux"`).
 
 - OS-conditional blocks use `{{- if eq .chezmoi.os "darwin" }}` / `{{- if eq .chezmoi.os "linux" }}`.
 - Work/personal branching uses `{{- if .is_work }}`.
-- Tool check scripts are gated to specific platforms via template conditionals — macOS generally assumes tools are pre-installed via Homebrew.
+- Tool check scripts are gated to specific platforms via template conditionals — macOS generally assumes tools are pre-installed via MacPorts.
 - Local per-machine customizations go in `~/.zshrc.include.d/*.zsh` (not chezmoi-managed, just a `.gitkeep`).
 - **Prefer runtime `command -v` over template conditionals in shell config.** When sourcing or initializing a tool in `dot_zshrc.include.tmpl`, gate on `if command -v <tool> >/dev/null 2>&1` rather than chezmoi template `{{ if }}` blocks. This makes the config future-proof — the tool activates automatically once installed, regardless of which machine profile deployed the file. Reserve template conditionals for install scripts and platform-specific paths/settings.
