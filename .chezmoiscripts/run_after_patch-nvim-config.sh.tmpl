@@ -1,0 +1,5 @@
+#!/bin/bash
+{{- if eq .chezmoi.os "darwin" }}
+# Patch kickstart.nvim to enable Nerd Font support
+sed -i.bak 's/vim\.g\.have_nerd_font = false/vim.g.have_nerd_font = true/' "${HOME}/.config/nvim/init.lua" && rm -f "${HOME}/.config/nvim/init.lua.bak"
+{{- end }}
