@@ -49,7 +49,7 @@ OS is available via `.chezmoi.os` (`"darwin"` or `"linux"`).
   - `run_onchange_check-atuin.sh.tmpl` — non-work/internet only, auto-installs atuin shell history.
   - `run_onchange_set-default-shell.sh.tmpl` — Linux-only, sets zsh as default shell.
   - `run_onchange_before_decrypt-age-key.sh.tmpl` — decrypts age-encrypted SSH key on change.
-  - `run_after_patch-nvim-config.sh.tmpl` — macOS-only, patches kickstart.nvim to enable Nerd Font.
+  - `run_onchange_install-kickstart-nvim.sh.tmpl` — downloads kickstart.nvim, patches Nerd Font on macOS, cleans stale plugins. Bump `config-version` comment to force re-download.
 
 ## Key Patterns
 

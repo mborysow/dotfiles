@@ -1,0 +1,55 @@
+{{- if .has_internet -}}
+#!/bin/bash
+# config-version: 1
+# Bump the version above to force re-download of kickstart.nvim
+
+if [ -f "${HOME}/.config/chezmoi/ignore-nvim-install" ]; then
+    exit 0
+fi
+
+if ! command -v nvim >/dev/null 2>&1; then
+    echo "nvim not found, skipping kickstart.nvim install."
+    exit 0
+fi
+
+{{- if .is_work }}
+ARCHIVE_URL="https://gitlab.example.com/mirrors/kickstart.nvim/-/archive/master/kickstart.nvim-master.tar.gz"
+{{- else }}
+ARCHIVE_URL="https://github.com/nvim-lua/kickstart.nvim/archive/master.tar.gz"
+{{- end }}
+
+NVIM_CONFIG="${HOME}/.config/nvim"
+TMPDIR_NVIM="$(mktemp -d)"
+trap 'rm -rf "${TMPDIR_NVIM}"' EXIT
+
+echo "Downloading kickstart.nvim..."
+if ! curl -sSfL "${ARCHIVE_URL}" | tar xz -C "${TMPDIR_NVIM}" --strip-components=1; then
+    echo "WARNING: Failed to download kickstart.nvim."
+    echo ""
+    echo "To suppress this script, create: ~/.config/chezmoi/ignore-nvim-install"
+    exit 1
+fi
+
+rm -rf "${NVIM_CONFIG}"
+mkdir -p "${NVIM_CONFIG}"
+cp -a "${TMPDIR_NVIM}/." "${NVIM_CONFIG}/"
+
+{{- if eq .chezmoi.os "darwin" }}
+
+# Patch kickstart.nvim to enable Nerd Font support on macOS
+sed -i '' 's/vim\.g\.have_nerd_font = false/vim.g.have_nerd_font = true/' "${NVIM_CONFIG}/init.lua"
+{{- end }}
+
+# Remove nvim-treesitter .install() call — bundled parsers already exist,
+# and compiling from source is slow/hangs. vim.treesitter.start() works fine with them.
+sed -i{{ if eq .chezmoi.os "darwin" }} ''{{ end }} "/require('nvim-treesitter')\.install(filetypes)/d" "${NVIM_CONFIG}/init.lua"
+
+# Fix mason package name: mason-tool-installer needs the mason registry name
+sed -i{{ if eq .chezmoi.os "darwin" }} ''{{ end }} "s/'lua_ls',\(.*Lua Language server\)/'lua-language-server',\1/" "${NVIM_CONFIG}/init.lua"
+
+# Clean stale lazy.nvim plugins and mason packages so they reinstall fresh
+rm -rf "${HOME}/.local/share/nvim/lazy/"
+rm -rf "${HOME}/.local/share/nvim/mason/"
+
+echo "kickstart.nvim installed. Open nvim to complete plugin setup."
+{{ end -}}

@@ -120,13 +120,3 @@
 {{- end }}
     exact = {{ $exact }}
     stripComponents = 1
-
-[".config/nvim"]
-    type = "archive"
-{{- if .is_work }}
-    url = "https://gitlab.example.com/mirrors/kickstart.nvim/-/archive/master/kickstart.nvim-master.tar.gz"
-{{- else }}
-    url = "https://github.com/nvim-lua/kickstart.nvim/archive/master.tar.gz"
-{{- end }}
-    stripComponents = 1
-    refreshPeriod = "{{ $refresh }}"
