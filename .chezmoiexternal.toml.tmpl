@@ -1,122 +1,116 @@
-{{- $exact := .has_internet -}}
-{{- $refresh := "168h" -}}
+{{- $isWork := .is_work -}}
+{{- $mirrorBase := "" -}}
+{{- $mirrorNS := "" -}}
+{{- if $isWork -}}
+{{-   $mirrorBase = .git_mirror_base -}}
+{{-   $mirrorNS = .git_mirror_namespace -}}
+{{- end -}}
 
 [".oh-my-zsh"]
-    type = "archive"
-{{- if .is_work }}
-    url = "https://gitlab.example.com/mirrors/ohmyzsh/-/archive/master/ohmyzsh-master.tar.gz"
+    type = "git-repo"
+{{- if $isWork }}
+    url = "{{ $mirrorBase }}/{{ $mirrorNS }}/ohmyzsh.git"
 {{- else }}
-    url = "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"
+    url = "https://github.com/ohmyzsh/ohmyzsh.git"
 {{- end }}
-    exact = {{ $exact }}
-    stripComponents = 1
-    refreshPeriod = "{{ $refresh }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 
 [".oh-my-zsh/custom/plugins/fast-syntax-highlighting"]
-    type = "archive"
-{{- if .is_work }}
-    url = "https://gitlab.example.com/mirrors/fast-syntax-highlighting/-/archive/master/fast-syntax-highlighting-master.tar.gz"
+    type = "git-repo"
+{{- if $isWork }}
+    url = "{{ $mirrorBase }}/{{ $mirrorNS }}/fast-syntax-highlighting.git"
 {{- else }}
-    url = "https://github.com/zdharma-continuum/fast-syntax-highlighting/archive/master.tar.gz"
+    url = "https://github.com/zdharma-continuum/fast-syntax-highlighting.git"
 {{- end }}
-    exact = {{ $exact }}
-    stripComponents = 1
-    refreshPeriod = "{{ $refresh }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 
 [".oh-my-zsh/custom/plugins/fzf"]
-    type = "archive"
-{{- if .is_work }}
-    url = "https://gitlab.example.com/mirrors/fzf/-/archive/master/fzf-master.tar.gz"
+    type = "git-repo"
+{{- if $isWork }}
+    url = "{{ $mirrorBase }}/{{ $mirrorNS }}/fzf.git"
 {{- else }}
-    url = "https://github.com/junegunn/fzf/archive/master.tar.gz"
+    url = "https://github.com/junegunn/fzf.git"
 {{- end }}
-    exact = {{ $exact }}
-    stripComponents = 1
-    refreshPeriod = "{{ $refresh }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 
 [".oh-my-zsh/custom/plugins/fzf-zsh-plugin"]
-    type = "archive"
-{{- if .is_work }}
-    url = "https://gitlab.example.com/mirrors/fzf-zsh-plugin/-/archive/master/fzf-zsh-plugin-master.tar.gz"
+    type = "git-repo"
+{{- if $isWork }}
+    url = "{{ $mirrorBase }}/{{ $mirrorNS }}/fzf-zsh-plugin.git"
 {{- else }}
-    url = "https://github.com/unixorn/fzf-zsh-plugin/archive/master.tar.gz"
+    url = "https://github.com/unixorn/fzf-zsh-plugin.git"
 {{- end }}
-    exact = {{ $exact }}
-    stripComponents = 1
-    refreshPeriod = "{{ $refresh }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 
 [".oh-my-zsh/custom/plugins/you-should-use"]
-    type = "archive"
-{{- if .is_work }}
-    url = "https://gitlab.example.com/mirrors/zsh-you-should-use/-/archive/master/zsh-you-should-use-master.tar.gz"
+    type = "git-repo"
+{{- if $isWork }}
+    url = "{{ $mirrorBase }}/{{ $mirrorNS }}/zsh-you-should-use.git"
 {{- else }}
-    url = "https://github.com/MichaelAquilina/zsh-you-should-use/archive/master.tar.gz"
+    url = "https://github.com/MichaelAquilina/zsh-you-should-use.git"
 {{- end }}
-    exact = {{ $exact }}
-    stripComponents = 1
-    refreshPeriod = "{{ $refresh }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 
 [".oh-my-zsh/custom/plugins/zsh-autocomplete"]
-    type = "archive"
-{{- if .is_work }}
-    url = "https://gitlab.example.com/mirrors/zsh-autocomplete/-/archive/main/zsh-autocomplete-main.tar.gz"
+    type = "git-repo"
+{{- if $isWork }}
+    url = "{{ $mirrorBase }}/{{ $mirrorNS }}/zsh-autocomplete.git"
 {{- else }}
-    url = "https://github.com/marlonrichert/zsh-autocomplete/archive/main.tar.gz"
+    url = "https://github.com/marlonrichert/zsh-autocomplete.git"
 {{- end }}
-    exact = {{ $exact }}
-    stripComponents = 1
-    refreshPeriod = "{{ $refresh }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 
 [".oh-my-zsh/custom/plugins/zsh-autosuggestions"]
-    type = "archive"
-{{- if .is_work }}
-    url = "https://gitlab.example.com/mirrors/zsh-autosuggestions/-/archive/master/zsh-autosuggestions-master.tar.gz"
+    type = "git-repo"
+{{- if $isWork }}
+    url = "{{ $mirrorBase }}/{{ $mirrorNS }}/zsh-autosuggestions.git"
 {{- else }}
-    url = "https://github.com/zsh-users/zsh-autosuggestions/archive/master.tar.gz"
+    url = "https://github.com/zsh-users/zsh-autosuggestions.git"
 {{- end }}
-    exact = {{ $exact }}
-    stripComponents = 1
-    refreshPeriod = "{{ $refresh }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 
 [".oh-my-zsh/custom/plugins/zsh-bat"]
-    type = "archive"
-{{- if .is_work }}
-    url = "https://gitlab.example.com/mirrors/zsh-bat/-/archive/master/zsh-bat-master.tar.gz"
+    type = "git-repo"
+{{- if $isWork }}
+    url = "{{ $mirrorBase }}/{{ $mirrorNS }}/zsh-bat.git"
 {{- else }}
-    url = "https://github.com/fdellwing/zsh-bat/archive/master.tar.gz"
+    url = "https://github.com/fdellwing/zsh-bat.git"
 {{- end }}
-    exact = {{ $exact }}
-    stripComponents = 1
-    refreshPeriod = "{{ $refresh }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 
 [".oh-my-zsh/custom/plugins/zsh-completions"]
-    type = "archive"
-{{- if .is_work }}
-    url = "https://gitlab.example.com/mirrors/zsh-completions/-/archive/master/zsh-completions-master.tar.gz"
+    type = "git-repo"
+{{- if $isWork }}
+    url = "{{ $mirrorBase }}/{{ $mirrorNS }}/zsh-completions.git"
 {{- else }}
-    url = "https://github.com/zsh-users/zsh-completions/archive/master.tar.gz"
+    url = "https://github.com/zsh-users/zsh-completions.git"
 {{- end }}
-    exact = {{ $exact }}
-    stripComponents = 1
-    refreshPeriod = "{{ $refresh }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 
 [".oh-my-zsh/custom/plugins/zsh-syntax-highlighting"]
-    type = "archive"
-{{- if .is_work }}
-    url = "https://gitlab.example.com/mirrors/zsh-syntax-highlighting/-/archive/master/zsh-syntax-highlighting-master.tar.gz"
+    type = "git-repo"
+{{- if $isWork }}
+    url = "{{ $mirrorBase }}/{{ $mirrorNS }}/zsh-syntax-highlighting.git"
 {{- else }}
-    url = "https://github.com/zsh-users/zsh-syntax-highlighting/archive/master.tar.gz"
+    url = "https://github.com/zsh-users/zsh-syntax-highlighting.git"
 {{- end }}
-    exact = {{ $exact }}
-    stripComponents = 1
-    refreshPeriod = "{{ $refresh }}"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
 
 [".oh-my-zsh/custom/themes/powerlevel10k"]
-    type = "archive"
-{{- if .is_work }}
-    url = "https://gitlab.example.com/mirrors/powerlevel10k/-/archive/v1.15.0/powerlevel10k-v1.15.0.tar.gz"
+    type = "git-repo"
+{{- if $isWork }}
+    url = "{{ $mirrorBase }}/{{ $mirrorNS }}/powerlevel10k.git"
 {{- else }}
-    url = "https://github.com/romkatv/powerlevel10k/archive/v1.15.0.tar.gz"
+    url = "https://github.com/romkatv/powerlevel10k.git"
 {{- end }}
-    exact = {{ $exact }}
-    stripComponents = 1
+    clone.args = ["--branch", "v1.15.0", "--depth", "1"]

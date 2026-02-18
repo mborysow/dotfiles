@@ -1,0 +1,45 @@
+{{ if not .is_work -}}
+#!/bin/bash
+# Not a work environment -- nothing to do
+exit 0
+{{ else -}}
+#!/bin/bash
+set -euo pipefail
+
+CHEZMOI_WORK_CONFIG="${HOME}/.config/chezmoi-work/chezmoi.toml"
+CHEZMOI_WORK_SOURCE="${HOME}/.local/share/chezmoi-work"
+CHEZMOI_WORK_BIN="${HOME}/.local/bin/chezmoi-work"
+WORK_REPO="{{ .work_repo_url }}"
+
+# Create chezmoi-work wrapper (idempotent -- always overwrite to pick up changes)
+mkdir -p "$(dirname "$CHEZMOI_WORK_BIN")"
+cat > "$CHEZMOI_WORK_BIN" << 'WRAPPER'
+#!/bin/bash
+exec chezmoi --config ~/.config/chezmoi-work/chezmoi.toml \
+             --source ~/.local/share/chezmoi-work \
+             "$@"
+WRAPPER
+chmod +x "$CHEZMOI_WORK_BIN"
+
+# Create chezmoi-work config (idempotent -- always overwrite)
+mkdir -p "$(dirname "$CHEZMOI_WORK_CONFIG")"
+cat > "$CHEZMOI_WORK_CONFIG" << EOF
+encryption = "age"
+
+[age]
+    identity = "~/.config/chezmoi/key.txt"
+    recipient = "age130gz8hmt38t0jrph0kyq5rrr6ya5rzrpxgd550jlzunwqp8p6ecq7nxwzz"
+
+[data]
+    is_work = true
+    git_mirror_base = "{{ .git_mirror_base }}"
+    git_mirror_namespace = "{{ .git_mirror_namespace }}"
+EOF
+
+# Init or update work repo
+if [ ! -d "$CHEZMOI_WORK_SOURCE/.git" ]; then
+    "$CHEZMOI_WORK_BIN" init "$WORK_REPO" --apply
+else
+    "$CHEZMOI_WORK_BIN" apply
+fi
+{{ end -}}
