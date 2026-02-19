@@ -1,7 +1,7 @@
 # Default settings for all hosts
 Host *
     AddKeysToAgent yes
-    IdentitiesOnly yes
+    IdentitiesOnly no
 {{- if eq .chezmoi.os "darwin" }}
     UseKeychain yes
 {{- end }}
