@@ -1,0 +1,32 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+
+if [ -f "${HOME}/.config/chezmoi/ignore-keychain-check" ]; then
+    exit 0
+fi
+
+if command -v keychain >/dev/null 2>&1; then
+    exit 0
+fi
+
+echo "NOTE: keychain is not installed."
+echo ""
+echo "Without keychain, you'll need to re-enter your SSH key passphrase"
+echo "every session (it won't persist across reboots)."
+echo ""
+echo "Install it with one of:"
+if command -v apt >/dev/null 2>&1; then
+echo "  sudo apt install keychain"
+fi
+if command -v dnf >/dev/null 2>&1; then
+echo "  sudo dnf install keychain"
+fi
+if command -v pacman >/dev/null 2>&1; then
+echo "  sudo pacman -S keychain"
+fi
+echo ""
+echo "Once installed, it will activate automatically on next shell start."
+echo ""
+echo "To suppress this warning:"
+echo "  mkdir -p ~/.config/chezmoi && touch ~/.config/chezmoi/ignore-keychain-check"
+{{ end -}}
