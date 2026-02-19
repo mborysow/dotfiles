@@ -2,6 +2,8 @@ key.txt.age
 CLAUDE.md
 README.md
 
+.ssh/known_hosts
+.ssh/known_hosts.old
 .ssh/config.hosts.d/00-local-unmanaged-hosts
 
 {{ if .is_work -}}
