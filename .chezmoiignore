@@ -2,3 +2,8 @@ key.txt.age
 CLAUDE.md
 README.md
 
+.ssh/config.hosts.d/00-local-unmanaged-hosts
+
+{{ if .is_work -}}
+.ssh/config.hosts.d/40-nonwork-hosts
+{{ end -}}
