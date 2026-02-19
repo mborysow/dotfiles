@@ -14,4 +14,5 @@ encryption = "age"
     git_mirror_base = {{ promptStringOnce . "git_mirror_base" "GitLab mirror base URL" "" | quote }}
     git_mirror_namespace = {{ promptStringOnce . "git_mirror_namespace" "GitLab mirror namespace" "" | quote }}
     work_repo_url = {{ promptStringOnce . "work_repo_url" "Work dotfiles repo URL" "" | quote }}
+    work_network = {{ promptChoiceOnce . "work_network" "Work network type" (list "sn" "dn") | quote }}
 {{- end }}
