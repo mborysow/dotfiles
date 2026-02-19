@@ -5,6 +5,9 @@
 #   config.d/top-level-*       General and work-specific top-level settings
 #   config.hosts.d/*           Host entries (00-49 personal, 50-99 work)
 #   config.d/host-defaults-*   Host * catch-all defaults
+#
+# Machine-local hosts go in config.hosts.d/00-local-unmanaged-hosts (not
+# managed by chezmoi). Create it manually on each machine as needed.
 
 Include config.d/top-level-*
 Include config.hosts.d/*
