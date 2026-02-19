@@ -1,0 +1,11 @@
+# SSH config - managed by chezmoi
+# Do not add entries here; use the drop-in directories instead.
+#
+# Structure:
+#   config.d/top-level-*       General and work-specific top-level settings
+#   config.hosts.d/*           Host entries (00-49 personal, 50-99 work)
+#   config.d/host-defaults-*   Host * catch-all defaults
+
+Include config.d/top-level-*
+Include config.hosts.d/*
+Include config.d/host-defaults-*

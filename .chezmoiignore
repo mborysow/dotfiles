@@ -1,2 +1,6 @@
 key.txt.age
 CLAUDE.md
+
+{{ if .is_work -}}
+.ssh/config.hosts.d/00-personal-hosts
+{{ end -}}
