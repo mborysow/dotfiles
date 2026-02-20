@@ -1,9 +1,17 @@
 #!/bin/bash
 set -euo pipefail
 
-echo "Installing atuin..."
+CMD='curl --proto =https --tlsv1.2 -sSfL https://setup.atuin.sh | bash'
 
-if curl --proto '=https' --tlsv1.2 -sSfL https://setup.atuin.sh | bash; then
+echo "Will run: $CMD"
+printf "Proceed? [y/N] "
+read -r reply
+if [ "$reply" != "y" ] && [ "$reply" != "Y" ]; then
+    echo "Aborted."
+    exit 1
+fi
+
+if eval "$CMD"; then
     echo ""
     echo "Atuin installed successfully!"
     echo ""
