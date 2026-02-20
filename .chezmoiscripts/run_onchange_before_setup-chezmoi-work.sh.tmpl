@@ -6,6 +6,9 @@ exit 0
 #!/bin/bash
 set -euo pipefail
 
+# Ensure common install locations are in PATH so the chezmoi-work wrapper can find chezmoi
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+
 CHEZMOI_WORK_CONFIG="${HOME}/.config/chezmoi-work/chezmoi.toml"
 CHEZMOI_WORK_SOURCE="${HOME}/.local/share/chezmoi-work"
 CHEZMOI_WORK_BIN="${HOME}/.local/bin/chezmoi-work"
