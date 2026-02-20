@@ -28,6 +28,7 @@ See [dotfiles-work](https://gitlab.com/mborysow1/dotfiles-work) for the work boo
 - **Shell history** — atuin config and encrypted key
 - **SSH** — encrypted private key
 - **External tools** — oh-my-zsh + 10 plugins/themes as `git-repo` externals
+- **Install helpers** — `~/.local/bin/dot-install-*.sh` dispatchers and `~/.local/bin/helpers/` scripts for tool installation
 
 ## External Dependencies
 
