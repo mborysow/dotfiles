@@ -44,11 +44,13 @@ OS is available via `.chezmoi.os` (`"darwin"` or `"linux"`).
 - **`dot_local/bin/`** — install dispatcher scripts deployed to `~/.local/bin/`. Chezmoi `executable_` prefix makes them executable. E.g., `executable_dot-install-claude-code.sh` → `~/.local/bin/dot-install-claude-code.sh`.
 - **`dot_local/bin/helpers/`** — general install helpers deployed to `~/.local/bin/helpers/`. Work-specific helpers live in `dotfiles-work`.
 - **`.chezmoiscripts/`** — all run scripts live here (chezmoi's special directory for scripts that don't create a corresponding dir in `$HOME`). All use `run_onchange_` (re-run only when script contents change) or `run_after_` (run after targets update).
-  - `run_onchange_check-tools.sh.tmpl` — Linux-only, checks for required CLI tools (rg, fzf, bat, eza).
-  - `run_onchange_check-claude-code.sh` — cross-platform, prints reminder to run `~/.local/bin/dot-install-claude-code.sh` if `claude` is missing. No `exit 1` — config deploys regardless.
-  - `run_onchange_check-zellij.sh.tmpl` — checks for zellij terminal multiplexer.
-  - `run_onchange_check-nvim-deps.sh.tmpl` — checks for neovim and its build dependencies.
-  - `run_onchange_check-atuin.sh.tmpl` — non-work/internet only, auto-installs atuin shell history.
+  - `run_onchange_check-claude-code.sh` — prints reminder to run dispatcher if `claude` is missing.
+  - `run_onchange_check-keychain.sh` — Linux-only (runtime `uname` check), prints reminder to run dispatcher if `keychain` is missing.
+  - `run_onchange_check-zellij.sh` — prints reminder to run dispatcher if `zellij` is missing.
+  - `run_onchange_check-atuin.sh.tmpl` — non-work/internet only (template gates), prints reminder to run dispatcher if `atuin` is missing.
+  - `run_onchange_check-tools.sh` — checks for rg, fzf, bat, eza, fd, age; prints reminder to run dispatcher if any missing.
+  - `run_onchange_check-neovim.sh` — prints reminder to run dispatcher if `nvim` is missing.
+  - `run_onchange_check-nvim-deps.sh` — checks for nvim build deps (gcc, make, unzip, xclip/xsel); prints reminder to run dispatcher.
   - `run_onchange_set-default-shell.sh.tmpl` — Linux-only, sets zsh as default shell.
   - `run_onchange_before_decrypt-age-key.sh.tmpl` — decrypts age-encrypted SSH key on change.
   - `run_onchange_install-kickstart-nvim.sh.tmpl` — downloads kickstart.nvim, patches Nerd Font on macOS, cleans stale plugins. Bump `config-version` comment to force re-download.
@@ -57,6 +59,6 @@ OS is available via `.chezmoi.os` (`"darwin"` or `"linux"`).
 
 - OS-conditional blocks use `{{- if eq .chezmoi.os "darwin" }}` / `{{- if eq .chezmoi.os "linux" }}`.
 - Work/personal branching uses `{{- if .is_work }}`.
-- Tool check scripts are gated to specific platforms via template conditionals — macOS generally assumes tools are pre-installed via MacPorts.
+- Tool check scripts print one-line warnings pointing to dispatcher scripts in `~/.local/bin/`. No `exit 1` — config deploys regardless of tool presence. Only `atuin` retains `.tmpl` (needs chezmoi config gates); all others use runtime checks.
 - Local per-machine customizations go in `~/.zshrc.include.d/*.zsh` (not chezmoi-managed, just a `.gitkeep`).
 - **Prefer runtime `command -v` over template conditionals in shell config.** When sourcing or initializing a tool in `dot_zshrc.include.tmpl`, gate on `if command -v <tool> >/dev/null 2>&1` rather than chezmoi template `{{ if }}` blocks. This makes the config future-proof — the tool activates automatically once installed, regardless of which machine profile deployed the file. Reserve template conditionals for install scripts and platform-specific paths/settings.

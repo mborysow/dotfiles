@@ -5,34 +5,7 @@ if [ -f "${HOME}/.config/chezmoi/ignore-atuin-check" ]; then
     exit 0
 fi
 
-if command -v atuin >/dev/null 2>&1 || [ -x "${HOME}/.atuin/bin/atuin" ]; then
-    exit 0
-fi
-
-echo "Atuin not found. Installing..."
-if curl --proto '=https' --tlsv1.2 -sSfL https://setup.atuin.sh | bash; then
-    echo ""
-    echo "Atuin installed successfully!"
-    echo ""
-    echo "First-time setup (open a new shell first):"
-    echo "  atuin register -u <username> -e <email>"
-    echo "  atuin import zsh"
-    echo ""
-    echo "Then encrypt and store your key in chezmoi:"
-    echo "  chezmoi add --encrypt ~/.local/share/atuin/key"
-    echo ""
-    echo "On subsequent machines:"
-    echo "  atuin login -u <username>"
-    echo "  atuin import zsh"
-    echo "  atuin sync"
-else
-    echo "WARNING: Failed to install atuin."
-    echo ""
-    echo "Install it manually with:"
-    echo "  curl --proto '=https' --tlsv1.2 -sSfL https://setup.atuin.sh | bash"
-    echo ""
-    echo "If you don't want atuin on this machine, suppress this warning:"
-    echo "  mkdir -p ~/.config/chezmoi && touch ~/.config/chezmoi/ignore-atuin-check"
-    exit 1
+if ! command -v atuin >/dev/null 2>&1 && [ ! -x "${HOME}/.atuin/bin/atuin" ]; then
+    echo "WARNING: atuin is not installed. Run ~/.local/bin/dot-install-atuin.sh to install."
 fi
 {{ end -}}
