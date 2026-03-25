@@ -11,3 +11,7 @@ README.md
 .ssh/config.hosts.d/40-nonwork-hosts
 .ssh/authorized_keys.d/10-personal-keys
 {{ end -}}
+
+{{ if ne .chezmoi.hostname "freedom" -}}
+.local/bin/osc52copy.sh
+{{ end -}}

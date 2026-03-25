@@ -338,7 +338,10 @@ default_mode "locked"
 // copy_command "wl-copy"                    // wayland
 // copy_command "pbcopy"                     // osx
 // 
-{{ if eq .chezmoi.os "darwin" -}}
+{{ if eq .chezmoi.hostname "freedom" -}}
+copy_command "osc52copy"
+copy_on_select true
+{{ else if eq .chezmoi.os "darwin" -}}
 copy_command "pbcopy"
 {{ else if eq .chezmoi.os "linux" -}}
 copy_command "wl-copy"
