@@ -10,6 +10,17 @@ README.md
 {{ if .is_work -}}
 .ssh/config.hosts.d/40-nonwork-hosts
 .ssh/authorized_keys.d/10-personal-keys
+.config/uv/uv.toml
+.npmrc
+Library/Preferences/pnpm/rc
+{{ end -}}
+
+{{ if not .is_work -}}
+.bunfig.toml
+{{ end -}}
+
+{{ if ne .chezmoi.os "darwin" -}}
+Library/Preferences/pnpm/rc
 {{ end -}}
 
 {{ if ne .chezmoi.hostname "freedom" -}}
