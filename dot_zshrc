@@ -93,7 +93,6 @@ plugins=(
   zsh-syntax-highlighting
   fast-syntax-highlighting
   zsh-completions 
-  zsh-autocomplete
   dircycle
   copyfile
 #  macports
@@ -106,6 +105,10 @@ plugins=(
 
   #dirhistory
   #dircycle 
+
+# zsh-autocomplete is unusably slow on Windows (msys/cygwin)
+[[ "$OSTYPE" != msys* && "$OSTYPE" != cygwin* ]] && plugins+=(zsh-autocomplete)
+
 autoload -U compinit && compinit
 source $ZSH/oh-my-zsh.sh
 
